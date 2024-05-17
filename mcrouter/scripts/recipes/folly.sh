@@ -47,13 +47,18 @@ if [ ! -d "$PKG_DIR/zstd" ]; then
   make $MAKE_ARGS && make install $MAKE_ARGS
 fi
 
-cd "$PKG_DIR/folly/folly/" || die "cd fail"
+cd "$PKG_DIR/folly" || die "cd fail"
 
-CXXFLAGS="$CXXFLAGS -fPIC" \
-    LD_LIBRARY_PATH="$INSTALL_DIR/lib:$LD_LIBRARY_PATH" \
-    LD_RUN_PATH="$INSTALL_DIR/lib:$LD_RUN_PATH" \
-    cmake .. \
-    -DCMAKE_INSTALL_PREFIX="$INSTALL_DIR" \
-    -DCMAKE_INCLUDE_PATH="$INSTALL_DIR/lib" \
-    -DCMAKE_LIBRARY_PATH="$INSTALL_DIR/lib"
-make $MAKE_ARGS && make install $MAKE_ARGS
+# CXXFLAGS="$CXXFLAGS -fPIC" \
+#     LD_LIBRARY_PATH="$INSTALL_DIR/lib:$LD_LIBRARY_PATH" \
+#     LD_RUN_PATH="$INSTALL_DIR/lib:$LD_RUN_PATH" \
+#     cmake .. \
+#     -DCMAKE_INSTALL_PREFIX="$INSTALL_DIR" \
+#     -DCMAKE_INCLUDE_PATH="$INSTALL_DIR/lib" \
+#     -DCMAKE_LIBRARY_PATH="$INSTALL_DIR/lib"
+# make $MAKE_ARGS && make install $MAKE_ARGS
+
+## FIX IT
+sudo ./build/fbcode_builder/getdeps.py install-system-deps --recursive
+
+python3 ./build/fbcode_builder/getdeps.py --allow-system-packages build --no-test 
