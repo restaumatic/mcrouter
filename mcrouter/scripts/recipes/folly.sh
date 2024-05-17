@@ -58,7 +58,6 @@ cd "$PKG_DIR/folly" || die "cd fail"
 #     -DCMAKE_LIBRARY_PATH="$INSTALL_DIR/lib"
 # make $MAKE_ARGS && make install $MAKE_ARGS
 
-## FIX IT
-sudo ./build/fbcode_builder/getdeps.py install-system-deps --recursive
+sudo ./build/fbcode_builder/getdeps.py install-system-deps --recursive --install-dir=$INSTALL_DIR
 
-python3 ./build/fbcode_builder/getdeps.py --allow-system-packages build --no-test 
+sudo ./build/fbcode_builder/getdeps.py --install-prefix=$INSTALL_DIR build --no-test 
